@@ -1,82 +1,77 @@
-# HHL_MANY_BODY_QUANTUM
 # Adapting the HHL Algorithm to Quantum Many-Body Theory
 
-An implementation and benchmarking study of HHLite and AdaptHHLite,
-resource-efficient variants of the Harrow-Hassidim-Lloyd (HHL)
-algorithm for linear systems arising in quantum many-body theory.
+Implementation and benchmarking of the **HHL, HHLite, and AdaptHHLite**
+algorithms for solving linear systems arising in quantum many-body theory.
 
 ## Overview
 
-The HHL algorithm provides a quantum approach to solving linear systems
+The Harrow-Hassidim-Lloyd (HHL) algorithm provides a quantum approach to
+solving linear systems of equations. In this project, the linearized
+coupled-cluster formulation of quantum chemistry is mapped to a quantum
+linear system, allowing molecular correlation energies to be estimated
+from the resulting solution.
 
-$$
-A x = b.
-$$
+The project implements and studies two resource-efficient variants of
+HHL:
 
-In the linearized coupled-cluster formulation of quantum chemistry,
-the cluster amplitudes can be obtained from a linear system of this form,
-with the resulting solution used to estimate the correlation energy.
+- **HHLite** — reduces circuit complexity by fixing QPE clock qubits whose
+  measurement probabilities are sufficiently biased.
+- **AdaptHHLite** — combines the Lite procedure with a matrix-rescaling
+  scheme to enable more effective qubit fixing.
 
-This project implements the standard HHL algorithm and two
-resource-efficient modifications:
+The implementations are tested on reduced molecular Hamiltonians for
+**H₂ and LiH**.
 
-- **HHLite:** reduces circuit depth by fixing eigenvalue bits that are
-  strongly biased in the quantum phase estimation output.
-- **AdaptHHLite:** combines the Lite procedure with matrix scaling to
-  simplify the controlled rotations.
+## Methods
 
-## Systems
+The algorithms were implemented using **Qiskit** and evaluated under:
 
-The implementations are tested on linear systems corresponding to:
+- Noiseless quantum simulation
+- Noisy simulation using a depolarizing noise model
+- Execution on IBM quantum hardware
 
-- H₂
-- LiH
-
-## Benchmarking
-
-The circuits are evaluated under three computational settings:
-
-- Noiseless simulation
-- Noisy simulation with a depolarizing noise model
-- IBM quantum hardware
-
-Circuit depth and correlation-energy error are used to evaluate the
-trade-off between resource reduction and accuracy.
+Performance was evaluated using circuit depth, entangling-gate count,
+runtime, and percentage deviation of the estimated correlation energy
+from the reference value.
 
 ## Results
 
-For the H₂ system, AdaptHHLite reduces the transpiled circuit depth from
+### HHLite
 
-$$
-101 \rightarrow 52 \rightarrow 27 \rightarrow 14 \rightarrow 7,
-$$
+For H₂, the multi-qubit fixing procedure substantially reduces circuit
+depth while maintaining accurate correlation-energy estimates.
 
-corresponding to approximately 93% depth compression at four fixed
-qubits, while maintaining an energy error below 2%.
+![HHLite Results](figures/hhlite-results.png)
 
-Further fixing can lead to a loss of valid measurement outcomes and
-failure of the estimation procedure.
+For LiH, the QPE clock-qubit probabilities remain insufficiently biased
+for effective fixing, limiting the circuit-depth reduction.
 
-![AdaptHHLite results](figures/adapthhlite_results.png)
+### AdaptHHLite
 
-## Contents
+Matrix rescaling enables substantially more aggressive qubit fixing,
+including for the LiH system.
 
-- `notebooks/` — implementation and numerical experiments
-- `figures/` — generated performance plots
-- `report/` — project report
+For H₂, the transpiled circuit depth decreases from
 
-## Requirements
+**101 → 52 → 27 → 14 → 7**
 
-- Python
-- NumPy
-- SciPy
-- Matplotlib
-- Qiskit
-- Qiskit Aer
-- Qiskit IBM Runtime
+as additional clock qubits are fixed, corresponding to approximately
+**93% circuit-depth reduction** at four fixed qubits while maintaining
+an energy error below 2%.
 
-## Reference
+![AdaptHHLite Results](figures/adapthhlite-results.png)
 
-N. Baskaran et al.,
-*Adapting the HHL Algorithm to Quantum Many-Body Theory*,
-Physical Review Research **5**, 043113 (2023).
+Across H₂ and LiH, substantial reductions in transpiled circuit depth
+and entangling-gate count were observed in noiseless simulation, noisy
+simulation, and IBM hardware executions.
+
+## Repository Structure
+
+```text
+├── notebooks/
+│   └── HHL_Quantum_Many_Body.ipynb
+├── figures/
+│   ├── hhlite-results.png
+│   └── adapthhlite-results.png
+└── report/
+    └── HHL_Quantum_Many_Body_Theory.pdf
