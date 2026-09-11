@@ -65,13 +65,27 @@ Across H₂ and LiH, substantial reductions in transpiled circuit depth
 and entangling-gate count were observed in noiseless simulation, noisy
 simulation, and IBM hardware executions.
 
-## Repository Structure
+## Project Report
 
-```text
-├── notebooks/
-│   └── HHL_Quantum_Many_Body.ipynb
-├── figures/
-│   ├── hhlite-results.png
-│   └── adapthhlite-results.png
-└── report/
-    └── HHL_Quantum_Many_Body_Theory.pdf
+The full theoretical review, implementation details, and numerical results are available in the project report:
+
+[Read the full project report](report/HHL_Quantum_Many_Body_Theory.pdf)
+
+## Jupyter Notebook
+
+The complete implementation and numerical experiments are available here:
+
+[Open the Jupyter notebook](notebooks/HHL_Quantum_Many_Body.ipynb)
+
+## Reference
+
+N. Baskaran, A. S. Rawat, A. Jayashankar, et al.,  
+*Adapting the Harrow–Hassidim–Lloyd Algorithm to Quantum Many-Body Theory*,  
+Physical Review Research **5**, 043113 (2023).
+
+DOI: 10.1103/PhysRevResearch.5.043113
+
+## Author
+
+**Shivaji Roy Chowdhury**  
+Indian Institute of Technology Madras
