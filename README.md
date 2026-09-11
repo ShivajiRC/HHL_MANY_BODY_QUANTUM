@@ -41,7 +41,7 @@ from the reference value.
 For H₂, the multi-qubit fixing procedure substantially reduces circuit
 depth while maintaining accurate correlation-energy estimates.
 
-![HHLite Results](figures/hhlite-results.png)
+![HHLite Results](figures/hhlite_results.png)
 
 For LiH, the QPE clock-qubit probabilities remain insufficiently biased
 for effective fixing, limiting the circuit-depth reduction.
@@ -59,7 +59,7 @@ as additional clock qubits are fixed, corresponding to approximately
 **93% circuit-depth reduction** at four fixed qubits while maintaining
 an energy error below 2%.
 
-![AdaptHHLite Results](figures/adapthhlite-results.png)
+![AdaptHHLite Results](figures/adapthhlite_results.png)
 
 Across H₂ and LiH, substantial reductions in transpiled circuit depth
 and entangling-gate count were observed in noiseless simulation, noisy
